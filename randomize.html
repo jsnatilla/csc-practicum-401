@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> Randomize </title>
+
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body onload="update_array();">
+
+<div class="animation">
+		
+		<div id="alg"> 
+		<h2> RANDOMIZE-IN-PLACE(A)</h2>
+		<p> pseudocode</p>
+		<ol>
+			<li id="alg1"> n=A.length</li>
+			<li id="alg2"> for i = 1 to n</li>
+			<li id="alg3"> swap A[i] with A[Random(i,n)] </li>
+		</ol>
+		</div>
+
+		<div id="array"> 
+
+			<div class= "arraycell" id="spot0">
+				<div class= "arraytext" id="array1"> </div>
+			</div>
+
+			<div class= "arraycell" id="spot1">
+				<div class= "arraytext" id="array2"> </div>
+			</div>
+
+			<div class= "arraycell" id="spot2">
+				<div class= "arraytext" id="array3"> </div>
+			</div>
+
+			<div class= "arraycell" id="spot3">
+				<div class= "arraytext" id="array4"> </div>
+			</div>
+
+			<div class= "arraycell" id="spot4">
+				<div class= "arraytext" id="array5"> </div>
+			</div>
+
+		</div>
+
+		<script>
+
+			randomize = [1, 2, 3, 4, 5];
+
+			var number_of_swaps = 0;
+
+			//button calls method
+			//method increments i instead of for loop
+			//runs code again
+
+
+			function update_array(){
+
+				for( i=0; i<randomize.length; i++){ 
+					
+					document.getElementById("spot"+i).innerText = number_of_swaps + " - " + randomize[i];
+					document.getElementById(""+i)
+
+					switch(number_of_swaps){
+						case 1:
+						document.getElementById("alg1").style.backgroundColor = "purple";
+						break;
+
+						case 2:
+						document.getElementById("alg2").style.backgroundColor = "purple";
+						document.getElementById("alg3").style.backgroundColor = "purple";
+						break;
+
+						case 3:
+						document.getElementById("alg2").style.backgroundColor = "purple";
+						document.getElementById("alg3").style.backgroundColor = "purple";
+						break;
+
+						case 4:
+						document.getElementById("alg2").style.backgroundColor = "purple";
+						document.getElementById("alg3").style.backgroundColor = "purple";
+						break;
+
+						case 5:
+						document.getElementById("alg2").style.backgroundColor = "purple";
+						document.getElementById("alg3").style.backgroundColor = "purple";
+						break;
+
+						case 0:
+						
+						break;
+
+
+					}
+					
+
+				}
+
+				if(number_of_swaps < 5){
+
+					// document.getElementById("alg2").style.backgroundColor = "purple";
+
+					random = Math.floor(Math.random() * (randomize.length - number_of_swaps) + number_of_swaps);
+
+					var j = randomize[random];
+
+					randomize[random] = randomize[number_of_swaps];
+
+					randomize[number_of_swaps] = j;
+
+					number_of_swaps+=1;
+
+
+				} else{
+
+					number_of_swaps = 0;
+					randomize = [1, 2, 3, 4, 5];
+
+				}
+
+			}
+
+			</script>
+
+			<table>
+			<tr>
+			<td style="border: solid black 2px; background: #eef;"
+			onclick="update_array()">&nbsp;Next&nbsp;</td>
+			</tr>
+			</table>
+
+</div>
+
+
+
+</body>
+</html>
+
+
+	
