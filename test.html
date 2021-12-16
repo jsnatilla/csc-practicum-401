@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Hashing: Linear Probing</title>
+<!--
+<script type="text/javascript" src="myjavascript.js"></script>
+<link href="course.css" rel="stylesheet" type="text/css">
+-->
+<style type="text/css"><!--
+   /* internal styles */
+body {
+   font-family: Helvetica;
+   font-size: 10px;
+   margin: 2.5em auto 5em 5% ;
+   width: 90%; 
+}
+
+#header {
+   margin: 3em 0 ;
+   padding: 0em  2em 0 ;
+   text-align: center ;
+}
+th{
+	border: solid black 2px; background: #556B2F;
+}
+#header .title {
+   font-size: 1.6em ;
+   margin-bottom: 0 ;
+}
+
+.section {
+   font-size: 1.1em ;
+   font-weight: bold ;
+}
+
+.prebox {
+   background: #black; 
+   overflow: scroll; 
+}
+
+.bucketnumber {
+   margin-top: 4.5em; 
+   text-align: center;
+   color: #555 ;
+}
+
+.buckettext {
+   float: left; 
+   text-align: center; 
+   width: 100%; 
+   margin-top: 1em ;
+   font-size: 1.5em ;
+}
+
+.bucketbox {
+   float: left; width: 4em; height: 4em;
+   border:  solid; black;
+}
+
+#container {
+   height: 8em ;
+}
+
+</style>
+
+<script type="text/javascript">
+
+var TABLE_SIZE = 16 ;
+
+function setElementValue(elementId, value) {
+	if ( document.getElementById(elementId).innerText!=undefined ) {
+		document.getElementById(elementId).innerText = value ;
+	} else {
+		document.getElementById(elementId).textContent = value ;
+	}
+}
+
+function setCellColor(cell, color) {
+	document.getElementById(cell).style.background = color ;
+}
+
+function makeBucketHTMLString(i) {
+	return '<div class="bucketbox" id="bb_'+i+'" style= background: white;>'
+		+'<div id="square_'+i+'" class="buckettext"><'
+		+ '/div><div class="bucketnumber">'+i+'<'+'/div><'+'/div>' ;
+}
+
+
+function initElement() {
+	var el = document.getElementById("container") ;
+	var i ;
+	for (i=0;i<TABLE_SIZE;i++ ) {
+		el.innerHTML = el.innerHTML + makeBucketHTMLString(i) ;
+	}
+}
+ 
+function setElementValue(index, value) {
+	if ( document.getElementById(index).innerText!=undefined ) {
+		document.getElementById(index).innerText = value ;
+	} else {
+		document.getElementById(index).textContent = value ;
+	}
+}
+
+function getElementValue(index) {
+	if ( document.getElementById(index).innerText!=undefined ) {
+		return document.getElementById(index).innerText ;
+	} else {
+		return document.getElementById(index).textContent ;
+	}
+}
+
+function getFromBucket(k) {
+// check for IE or Gecko. This is Gecko only:
+	return getElementValue('square_'+k);
+}
+
+function putToBucket(k,t) {
+// check for IE or Gecko. This is Gecko only:
+	setElementValue('square_'+k,t) ;
+	document.getElementById('square_'+k).style.color="#0a0" ;
+}
+
+function makeBucketsBlack() {
+	var i ;
+	for ( i=0;i<TABLE_SIZE;i++ )
+		document.getElementById('square_'+i).style.color="#000" ;
+}
+
+function colorBucketTouched(i) {
+	document.getElementById('square_'+i).style.color="" ;
+}
+
+function clear() {
+	var i ;
+	for ( i=0;i<TABLE_SIZE;i++ ) {
+		putToBucket(i,"") ;
+	}
+}
+
+function hashTableInsert(j) {
+	var i = 0 ;
+	var h = j%TABLE_SIZE ;
+	var double = 2*(j%4)+1;
+	while ( getFromBucket(h) != "" ) {
+		colorBucketTouched(h) ;
+		h = ((h)+i*(double))%16;
+		i++ ;
+		if( i>TABLE_SIZE ) break ;
+	}
+	putToBucket(h,j) ;
+}
+
+
+function getInput() {
+    var s = document.getElementById('entry').value ;
+	var j = parseInt(s) ;
+	makeBucketsBlack() ;
+	if ( !isNaN(j) ) {
+		hashTableInsert(j) ;
+	}
+	document.getElementById('entry').value="" ;
+}
+</script>
+
+</head>
+<body onload="initElement();">
+ 
+<div id="header">
+<h1>
+Hashing: Double hash animation
+ </h1>
+</div>
+
+
+<h2>
+Array
+</h2>
+
+<div id="container">
+<!-- left margin -->
+<div style="float: left; width: 2em;">&nbsp;</div>
+
+
+</div>
+
+
+<h2>Add a value to the table</h2>
+
+<div style="float: left; width: 2em;"></div>
+
+<table>
+
+<tr>
+<th style="background: white; width: 10em;">Value
+<td><input type="text" id="entry">
+<tr>
+<th
+onclick="getInput()">Enter</th>
+<th
+onclick="clear()">Clear</th>
+</table>
+
+<h2>
+Description
+</h2>
+
+<p>
+This animation illustrates the skips and collisions that take place as numbers are added to an array and their slot is determined through a hash function. The function used to determine each slot in this animation was: (H1+(index)H2)%16 where H1 = key%16, H2 = 2*(key%4)+1.
+</p>
+
+
+</body>
+</html>
